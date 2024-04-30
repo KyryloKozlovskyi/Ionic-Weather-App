@@ -3,6 +3,7 @@ import { IonHeader, IonToolbar, IonTitle, IonContent, IonIcon } from '@ionic/ang
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import { addIcons } from 'ionicons';
 import { cloud } from 'ionicons/icons';
+import { WeatherServiceService } from '../services/weather-service.service';
 
 
 @Component({
@@ -13,7 +14,20 @@ import { cloud } from 'ionicons/icons';
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, IonIcon],
 })
 export class Tab1Page {
-  constructor() {
+
+  private response: any;
+  constructor(private weatherService: WeatherServiceService) {
     addIcons({ cloud });
+  }
+
+  ngOnInit(){
+    this.getWeatherData();
+  }
+
+  getWeatherData(){
+    this.weatherService.getWeatherData().subscribe((response) => {
+      this.response = response;
+      console.log(this.response);
+    });
   }
 }
