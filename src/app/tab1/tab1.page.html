@@ -1,17 +1,19 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1 Setup
+      Weather
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <div class="main">
+      <span class="city">Dublin</span>
+      <span class="date">Sat, 21:25</span>
+      <div class="icon">
+        <ion-icon aria-hidden="true" name="cloud"></ion-icon>
+      </div>
+      <span class="description">Cloudy</span>
+      <span class="temperature">18°C</span>
+  </div>
 </ion-content>
