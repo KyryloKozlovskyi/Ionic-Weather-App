@@ -4,6 +4,8 @@ import { ExploreContainerComponent } from '../explore-container/explore-containe
 import { addIcons } from 'ionicons';
 import { cloud } from 'ionicons/icons';
 import { WeatherServiceService } from '../services/weather-service.service';
+import { DecimalPipe } from '@angular/common';
+import { NgIf } from '@angular/common';
 
 
 @Component({
@@ -11,23 +13,21 @@ import { WeatherServiceService } from '../services/weather-service.service';
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, IonIcon],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, IonIcon, DecimalPipe, NgIf],
 })
 export class Tab1Page {
 
-  private response: any;
-  constructor(private weatherService: WeatherServiceService) {
-    addIcons({ cloud });
-  }
+  public resp: any = [];
+  constructor(private weatherService: WeatherServiceService) { }
 
   ngOnInit(){
     this.getWeatherData();
   }
 
-  getWeatherData(){
+  async getWeatherData(){
     this.weatherService.getWeatherData().subscribe((response) => {
-      this.response = response;
-      console.log(this.response);
+      this.resp = response;
+      console.log(this.resp);
     });
   }
 }

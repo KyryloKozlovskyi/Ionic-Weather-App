@@ -8,12 +8,12 @@
 
 <ion-content [fullscreen]="true">
   <div class="main">
-      <span class="city">Dublin</span>
-      <span class="date">Sat, 21:25</span>
-      <div class="icon">
-        <ion-icon aria-hidden="true" name="cloud"></ion-icon>
+      <span class="city">{{ resp.name }}</span>
+      <span class="date">{{ resp.dt }}</span>
+      <div class="icon" *ngIf="resp.weather">
+        <img src="http://openweathermap.org/img/wn/{{ resp.weather[0].icon }}@2x.png" alt="API Image">
       </div>
-      <span class="description">Cloudy</span>
-      <span class="temperature">18°C</span>
+      <span class="description" *ngIf="resp.weather">{{ resp.weather[0].main }}</span>
+      <span class="temperature" *ngIf="resp.main">{{ resp.main.temp | number: '1.0-0' }}</span>
   </div>
 </ion-content>
