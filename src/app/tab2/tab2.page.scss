@@ -1,0 +1,52 @@
+$size1: 11em;
+$size2: 3.5em;
+$size3: 3em;
+$size4: 2em;
+$size5: 1.5em;
+$size6: 1em;
+
+ion-content {
+   
+    --background: linear-gradient(150deg, rgba(48,107,190,1) 15%, rgba(1,60,96,1) 85%);
+    --ion-text-color: #CFE5FD;
+    
+}
+
+.main {
+    padding-top: 4em;
+    display: block;
+    text-align: center;
+}
+
+.city {
+    display: block;
+    font-size: $size3;
+    font-weight: bold;
+    padding-top: 0.2em;
+}
+
+.date {
+    display: block;
+    font-size: $size5;
+    font-weight: bold;
+}
+
+.description {
+    display: block;
+    font-size: $size3;
+    font-weight: bold;
+}
+
+.temperature {
+    display: block;
+    font-size: $size1;
+    padding: 0px;
+    margin: 0px;
+}
+
+.icon {
+    display: block;
+    font-size: $size1;
+    padding-top: 0px;
+    color: white;
+}
