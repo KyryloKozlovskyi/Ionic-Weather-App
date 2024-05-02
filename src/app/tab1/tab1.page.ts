@@ -6,6 +6,7 @@ import { cloud } from 'ionicons/icons';
 import { WeatherServiceService } from '../services/weather-service.service';
 import { DecimalPipe } from '@angular/common';
 import { NgIf } from '@angular/common';
+import { DatePipe } from '../pipes/date.pipe';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { NgIf } from '@angular/common';
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, IonIcon, DecimalPipe, NgIf],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, IonIcon, DecimalPipe, NgIf, DatePipe],
 })
 export class Tab1Page {
 

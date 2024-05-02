@@ -9,7 +9,7 @@
 <ion-content [fullscreen]="true">
   <div class="main">
       <span class="city">{{ resp.name }}</span>
-      <span class="date">{{ resp.dt }}</span>
+      <span class="date">{{ resp.dt | date}}</span>
       <div class="icon" *ngIf="resp.weather">
         <img src="http://openweathermap.org/img/wn/{{ resp.weather[0].icon }}@2x.png" alt="API Image">
       </div>
