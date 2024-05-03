@@ -1,17 +1,46 @@
+<!-- Detailed Weatheer -->
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
+     <ion-title>
+        Detailed Weather & Forecast
+     </ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+<ion-content>
+  <!-- Current Detailed Weahter Grid -->
+  <div class="main">
+     <span class="city">{{ resp.name }}</span>
+  </div>
+  <ion-grid>
+     <ion-row>
+        <span class="date">{{ resp.dt | date}}</span>
+     </ion-row>
+     <ion-row>
+        <span class="temperature" *ngIf="resp.main">{{ resp.main.temp | number: '1.0-0' }}°</span>
+        <div class="icon" *ngIf="resp.weather">
+           <img src="http://openweathermap.org/img/wn/{{ resp.weather[0].icon }}@2x.png" alt="API Image">
+        </div>
+     </ion-row>
+     <ion-row>
+        <span class="description" *ngIf="resp.weather">{{ resp.weather[0].main }}</span>
+     </ion-row>
+  </ion-grid>
+  <ion-grid>
+    Current conditions
+    <ion-row>
+      <ion-col>
+        <span class="detailed">Wind</span>
+        <span class="detailed" *ngIf="resp.weather">{{ resp.wind.deg | wind }}</span>
+        <span class="detailed" *ngIf="resp.weather">{{ resp.wind.speed }}</span>
+      </ion-col>
+      <ion-col>
+        <span class="detailed">Humidity</span>
+        <span class="detailed" *ngIf="resp.weather">{{ resp.main.humidity }}</span>
+      </ion-col>
+      <ion-col>
+        <span class="detailed">Pressure</span>
+        <span class="detailed" *ngIf="resp.weather">{{ resp.main.pressure }}</span>
+      </ion-col>
+    </ion-row>
+ </ion-grid>
 </ion-content>

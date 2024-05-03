@@ -1,4 +1,4 @@
-$size1: 11em;
+$size1: 4em;
 $size2: 3.5em;
 $size3: 3em;
 $size4: 2em;
@@ -16,6 +16,7 @@ ion-content {
     padding-top: 4em;
     display: block;
     text-align: center;
+    padding-bottom: 2em;
 }
 
 .city {
@@ -29,24 +30,29 @@ ion-content {
     display: block;
     font-size: $size5;
     font-weight: bold;
+    padding-left: 0.25em;
 }
 
 .description {
     display: block;
-    font-size: $size3;
+    font-size: $size5;
     font-weight: bold;
+    padding-left: 0.25em;
 }
 
 .temperature {
     display: block;
     font-size: $size1;
-    padding: 0px;
+    padding-top: 0.25em;
     margin: 0px;
+}
+
+.detailed {
+    display: block;
+    font-size: $size6;
 }
 
 .icon {
     display: block;
-    font-size: $size1;
-    padding-top: 0px;
     color: white;
 }
