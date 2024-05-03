@@ -19,7 +19,7 @@ import { WindPipe } from '../pipes/wind.pipe';
      NgIf, DatePipe, IonRefresher, IonRefresherContent, IonGrid, IonRow, IonCol, WindPipe],
 })
 export class Tab3Page {
-  public resp: any = []; // Stores json
+  public resp: any = []; // Stores current json
   constructor(private weatherService: WeatherServiceService) { }
 
   // Calls an api on page initialization
@@ -29,22 +29,24 @@ export class Tab3Page {
 
   // API call
   async getWeatherData(){
-      this.weatherService.getWeatherData().subscribe((response) => {
+    // Current
+    this.weatherService.getWeatherData().subscribe((response) => {
       this.resp = response;
       console.log(this.resp); // Logs json to the console
-    });
+    });  
   }
 
   // IonRefresher. Refreshes the page with the new api call
   async handleRefresh(event: any){
     setTimeout(() => {
       console.log("Refreshing..."); 
-      this.weatherService.getWeatherData().subscribe((response) => {
-        this.resp = response;
-        console.log(this.resp); // Logs json to the console
-        console.log("Done.");
-        event.target.complete();
-      });
-    }, 2000);
+        // Current 
+        this.weatherService.getWeatherData().subscribe((response) => {
+          this.resp = response;
+          console.log(this.resp); // Logs json to the console
+          console.log("Done current.");
+          event.target.complete();
+        });
+      }, 2000);
   }
 }
