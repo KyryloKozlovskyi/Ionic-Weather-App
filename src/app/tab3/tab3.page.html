@@ -35,8 +35,7 @@
       <ion-row>
          <ion-col class="conditions">
             <span class="detailed">Wind <ion-icon name="compass-outline"></ion-icon></span>
-            <span class="detailed" *ngIf="resp.current">{{ resp.current.wind_deg | wind }}</span>
-            <span class="detailed" *ngIf="resp.current">{{ resp.current.wind_speed }}</span>
+            <span class="detailed" *ngIf="resp.current">{{ resp.current.wind_deg | wind }}: {{ resp.current.wind_speed }}</span>
          </ion-col>
          <ion-col class="conditions">
             <span class="detailed">Humidity</span>
