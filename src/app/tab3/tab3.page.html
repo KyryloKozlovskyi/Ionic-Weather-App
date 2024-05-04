@@ -7,11 +7,16 @@
    </ion-toolbar>
 </ion-header>
 <ion-content>
+   <!-- Refresher -->
+<ion-content [fullscreen]="true">
+   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+     <ion-refresher-content></ion-refresher-content>
+   </ion-refresher>
    <!-- Current Detailed Weahter Grid -->
    <div class="main">
       <span class="city">Dublin</span>
    </div>
-   <ion-grid>
+   <ion-grid class="tempgrid">
       <ion-row>
          <span class="date" *ngIf="resp.current">{{ resp.current.dt | date}}</span>
       </ion-row>
@@ -26,18 +31,18 @@
       </ion-row>
    </ion-grid>
    <ion-grid>
-      Current conditions
+      <span class="current">Current conditions</span>
       <ion-row>
-         <ion-col>
-            <span class="detailed">Wind</span>
+         <ion-col class="conditions">
+            <span class="detailed">Wind <ion-icon name="compass-outline"></ion-icon></span>
             <span class="detailed" *ngIf="resp.current">{{ resp.current.wind_deg | wind }}</span>
             <span class="detailed" *ngIf="resp.current">{{ resp.current.wind_speed }}</span>
          </ion-col>
-         <ion-col>
+         <ion-col class="conditions">
             <span class="detailed">Humidity</span>
             <span class="detailed" *ngIf="resp.current">{{ resp.current.humidity }}</span>
          </ion-col>
-         <ion-col>
+         <ion-col class="conditions">
             <span class="detailed">Pressure</span>
             <span class="detailed" *ngIf="resp.current">{{ resp.current.pressure }}</span>
          </ion-col>
@@ -46,23 +51,13 @@
    <!-- Forecast Grid -->
    <ion-grid>
       <ion-row>
-         <ion-col class="day" *ngIf="resp.daily">{{resp.daily[0].dt}}</ion-col>
-         <ion-col class="day" *ngIf="resp.daily">{{resp.daily[1].dt}}</ion-col>
-         <ion-col class="day" *ngIf="resp.daily">{{resp.daily[2].dt}}</ion-col>
-         <ion-col class="day" *ngIf="resp.daily">{{resp.daily[3].dt}}</ion-col>
-         <ion-col class="day" *ngIf="resp.daily">{{resp.daily[4].dt}}</ion-col>
-         <ion-col class="day" *ngIf="resp.daily">{{resp.daily[5].dt}}</ion-col>
-         <ion-col class="day" *ngIf="resp.daily">{{resp.daily[6].dt}}</ion-col>
-      </ion-row>
-      <!-- Precipitation -->
-      <ion-row>
-         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[0].rain | number: '1.0-0' }}</ion-col>
-         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[1].rain | number: '1.0-0' }}</ion-col>
-         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[2].rain | number: '1.0-0' }}</ion-col>
-         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[3].rain | number: '1.0-0' }}</ion-col>
-         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[4].rain | number: '1.0-0' }}</ion-col>
-         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[5].rain | number: '1.0-0' }}</ion-col>
-         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[6].rain | number: '1.0-0' }}</ion-col>
+         <ion-col class="day" *ngIf="resp.daily">{{resp.daily[0].dt | day }}</ion-col>
+         <ion-col class="day" *ngIf="resp.daily">{{resp.daily[1].dt | day}}</ion-col>
+         <ion-col class="day" *ngIf="resp.daily">{{resp.daily[2].dt | day}}</ion-col>
+         <ion-col class="day" *ngIf="resp.daily">{{resp.daily[3].dt | day}}</ion-col>
+         <ion-col class="day" *ngIf="resp.daily">{{resp.daily[4].dt | day}}</ion-col>
+         <ion-col class="day" *ngIf="resp.daily">{{resp.daily[5].dt | day}}</ion-col>
+         <ion-col class="day" *ngIf="resp.daily">{{resp.daily[6].dt | day}}</ion-col>
       </ion-row>
       <!-- Icon -->
       <ion-row>
@@ -76,7 +71,7 @@
       </ion-row>
       <!-- Max Temp -->
       <ion-row>
-         <ion-col class="max" *ngIf="resp.daily">{{ resp.daily[0].temp.max | number: '1.0-0' }}</ion-col>
+         <ion-col class="max" *ngIf="resp.daily">{{ resp.daily[0].temp.max | number: '.0-0' }}</ion-col>
          <ion-col class="max" *ngIf="resp.daily">{{ resp.daily[1].temp.max | number: '1.0-0' }}</ion-col>
          <ion-col class="max" *ngIf="resp.daily">{{ resp.daily[2].temp.max | number: '1.0-0' }}</ion-col>
          <ion-col class="max" *ngIf="resp.daily">{{ resp.daily[3].temp.max | number: '1.0-0' }}</ion-col>
@@ -93,6 +88,16 @@
          <ion-col class="min" *ngIf="resp.daily">{{ resp.daily[4].temp.min | number: '1.0-0' }}</ion-col>
          <ion-col class="min" *ngIf="resp.daily">{{ resp.daily[5].temp.min | number: '1.0-0' }}</ion-col>
          <ion-col class="min" *ngIf="resp.daily">{{ resp.daily[6].temp.min | number: '1.0-0' }}</ion-col>
+      </ion-row>
+      <!-- Precipitation -->
+      <ion-row>
+         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[0].rain * 100}}</ion-col>
+         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[1].rain * 100}}</ion-col>
+         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[2].rain}}</ion-col>
+         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[3].rain}}</ion-col>
+         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[4].rain}}</ion-col>
+         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[5].rain}}</ion-col>
+         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[6].rain}}</ion-col>
       </ion-row>
    </ion-grid>
 </ion-content>

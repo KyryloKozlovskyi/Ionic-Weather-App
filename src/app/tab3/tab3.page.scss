@@ -5,11 +5,22 @@ $size4: 2em;
 $size5: 1.5em;
 $size6: 1em;
 
+
 ion-content {
    
     --background: linear-gradient(150deg, rgba(48,107,190,1) 15%, rgba(1,60,96,1) 85%);
     --ion-text-color: #CFE5FD;
     
+}
+
+.conditions {
+    display: block;
+    text-align: center;
+    border-style: solid;
+    border-color: #013C60;
+    background-color: #013C60;
+    margin: 0.2em;
+    border-radius: 5px;
 }
 
 .main {
@@ -26,6 +37,18 @@ ion-content {
     padding-top: 0.2em;
 }
 
+.tempgrid {
+    display: block;
+    padding-bottom: 2em;
+}
+
+.current {
+    display: block;
+    font-weight: bold;
+    color: lightblue;
+    padding-bottom: 0.2em;
+    padding-left: 0.25em;
+}
 .date {
     display: block;
     font-size: $size5;
@@ -45,11 +68,15 @@ ion-content {
     font-size: $size1;
     padding-top: 0.25em;
     margin: 0px;
+    color: white;
 }
 
 .detailed {
+    margin: auto;
+    padding: auto;
     display: block;
     font-size: $size6;
+    font-weight: bold;
 }
 
 .icon {

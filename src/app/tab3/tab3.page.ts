@@ -9,6 +9,9 @@ import { IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
 import { WeatherServiceService } from '../services/weather-service.service';
 import { IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
 import { WindPipe } from '../pipes/wind.pipe';
+import { DayPipe } from '../pipes/day.pipe';
+import { compassOutline } from 'ionicons/icons';
+import { addIcons } from 'ionicons';
 
 @Component({
   selector: 'app-tab3',
@@ -16,11 +19,13 @@ import { WindPipe } from '../pipes/wind.pipe';
   styleUrls: ['tab3.page.scss'],
   standalone: true,
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, IonIcon, DecimalPipe,
-     NgIf, DatePipe, IonRefresher, IonRefresherContent, IonGrid, IonRow, IonCol, WindPipe],
+     NgIf, DatePipe, IonRefresher, IonRefresherContent, IonGrid, IonRow, IonCol, WindPipe, DayPipe],
 })
 export class Tab3Page {
   public resp: any = []; // Stores current json
-  constructor(private weatherService: WeatherServiceService) { }
+  constructor(private weatherService: WeatherServiceService) { 
+    addIcons({compassOutline});
+  }
 
   // Calls an api on page initialization
   async ngOnInit(){
