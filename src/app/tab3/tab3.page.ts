@@ -10,7 +10,7 @@ import { WeatherServiceService } from '../services/weather-service.service';
 import { IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
 import { WindPipe } from '../pipes/wind.pipe';
 import { DayPipe } from '../pipes/day.pipe';
-import { compassOutline } from 'ionicons/icons';
+import { compassOutline, waterOutline, contractOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
 @Component({
@@ -24,7 +24,7 @@ import { addIcons } from 'ionicons';
 export class Tab3Page {
   public resp: any = []; // Stores current json
   constructor(private weatherService: WeatherServiceService) { 
-    addIcons({compassOutline});
+    addIcons({compassOutline, waterOutline, contractOutline});
   }
 
   // Calls an api on page initialization

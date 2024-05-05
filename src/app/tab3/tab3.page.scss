@@ -23,6 +23,17 @@ ion-content {
     border-radius: 5px;
 }
 
+.forecast {
+    display: block;
+    padding: 1em;
+
+    border-style: solid;
+    border-color: #013C60;
+    background-color: #013C60;
+    margin: 0.5em;
+    border-radius: 5px;
+}
+
 .main {
     padding-top: 4em;
     display: block;
@@ -84,9 +95,10 @@ ion-content {
     color: white;
 }
 
-// New Styles
-.day{
-    display: block;
+.day {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
     font-weight: bold;
 }
 
@@ -94,14 +106,22 @@ ion-content {
     display: block;
 }
 
-.gridicon{
-    display: block;
+.gridicon {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+.max, .min {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
 }
 
-.max{
+.forecastdivider {
     display: block;
-}
-
-.min{
-    display: block;
+    font-weight: bold;
+    color: lightblue;
+    padding-bottom: 0.2em;
+    padding-left: 0.5em;
+    padding-top: 1em;
 }
