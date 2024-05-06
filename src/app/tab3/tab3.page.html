@@ -7,10 +7,10 @@
    </ion-toolbar>
 </ion-header>
 <ion-content>
-   <!-- Refresher -->
+<!-- Refresher -->
 <ion-content [fullscreen]="true">
    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
-     <ion-refresher-content></ion-refresher-content>
+      <ion-refresher-content></ion-refresher-content>
    </ion-refresher>
    <!-- Current Detailed Weahter Grid -->
    <div class="main">
@@ -34,16 +34,48 @@
       <span class="current">Current conditions</span>
       <ion-row>
          <ion-col class="conditions">
-            <span class="detailed">Wind <ion-icon name="compass-outline"></ion-icon></span>
-            <span class="detailed" *ngIf="resp.current">{{ resp.current.wind_deg | wind }}: {{ resp.current.wind_speed }} km/h</span>
+            <span class="detailed">
+               Wind 
+               <ion-icon name="compass-outline"></ion-icon>
+            </span>
+            <span class="detailed" *ngIf="resp.current">{{ resp.current.wind_speed }} km/h</span>
          </ion-col>
          <ion-col class="conditions">
-            <span class="detailed">Humidity <ion-icon name="water-outline"></ion-icon></span>
+            <span class="detailed">
+               Rainfall 
+               <ion-icon name="water-outline"></ion-icon>
+            </span>
+            <span class="detailed" *ngIf="resp.current">{{ resp.current.rain | rain}} mm</span>
+         </ion-col>
+         <ion-col class="conditions">
+            <span class="detailed">
+               Pressure 
+               <ion-icon name="contract-outline"></ion-icon>
+            </span>
+            <span class="detailed" *ngIf="resp.current">{{ resp.current.pressure }} hPa</span>
+         </ion-col>
+      </ion-row>
+      <ion-row>
+         <ion-col class="conditions">
+            <span class="detailed">
+               Direction 
+               <ion-icon name="compass-outline"></ion-icon>
+            </span>
+            <span class="detailed" *ngIf="resp.current">{{ resp.current.wind_deg | wind }}</span>
+         </ion-col>
+         <ion-col class="conditions">
+            <span class="detailed">
+               Humidity 
+               <ion-icon name="water-outline"></ion-icon>
+            </span>
             <span class="detailed" *ngIf="resp.current">{{ resp.current.humidity }} %</span>
          </ion-col>
          <ion-col class="conditions">
-            <span class="detailed">Pressure <ion-icon name="contract-outline"></ion-icon></span>
-            <span class="detailed" *ngIf="resp.current">{{ resp.current.pressure }} hPa</span>
+            <span class="detailed">
+               Cloudiness 
+               <ion-icon name="cloud-outline"></ion-icon>
+            </span>
+            <span class="detailed" *ngIf="resp.current">{{ resp.current.clouds }} %</span>
          </ion-col>
       </ion-row>
    </ion-grid>
@@ -89,15 +121,17 @@
          <ion-col class="min" *ngIf="resp.daily">{{ resp.daily[5].temp.min | number: '1.0-0' }}°</ion-col>
          <ion-col class="min" *ngIf="resp.daily">{{ resp.daily[6].temp.min | number: '1.0-0' }}°</ion-col>
       </ion-row>
-      <!-- Precipitation -->
-      <ion-row>
-         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[0].rain}}</ion-col>
-         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[1].rain}}</ion-col>
-         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[2].rain}}</ion-col>
-         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[3].rain}}</ion-col>
-         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[4].rain}}</ion-col>
-         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[5].rain}}</ion-col>
-         <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[6].rain}}</ion-col>
-      </ion-row>
+      <!-- Precipitation NOT IMPLEMENTED daily.rain is not always availible in the forecast format -->
+      <!--
+         <ion-row>
+            <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[0].rain}}mm</ion-col>
+            <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[1].rain}} mm</ion-col>
+            <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[2].rain}} mm</ion-col>
+            <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[3].rain}} mm </ion-col>
+            <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[4].rain}}</ion-col>
+            <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[5].rain}}</ion-col>
+            <ion-col class="precipitation" *ngIf="resp.daily">{{resp.daily[6].rain}}</ion-col>
+         </ion-row>
+         -->
    </ion-grid>
 </ion-content>
