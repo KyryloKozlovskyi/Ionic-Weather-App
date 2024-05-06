@@ -21,7 +21,7 @@ export class WindPipe implements PipeTransform {
       return 'SW';
     } else if (degrees >= 270 && degrees < 315) {
       return 'W';
-    } else if (degrees >= 315 && degrees < 360) {
+    } else if (degrees >= 315 && degrees <= 360) {
       return 'NW';
     } else {
       return 'Invalid degrees';

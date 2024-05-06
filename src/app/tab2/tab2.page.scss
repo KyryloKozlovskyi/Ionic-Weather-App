@@ -1,9 +1,10 @@
-$size1: 11em;
+$size1: 4em;
 $size2: 3.5em;
 $size3: 3em;
 $size4: 2em;
 $size5: 1.5em;
 $size6: 1em;
+
 
 ion-content {
    
@@ -12,10 +13,32 @@ ion-content {
     
 }
 
+.conditions {
+    display: block;
+    text-align: center;
+    border-style: solid;
+    border-color: #013C60;
+    background-color: #013C60;
+    margin: 0.2em;
+    border-radius: 5px;
+}
+
+.forecast {
+    display: block;
+    padding: 1em;
+
+    border-style: solid;
+    border-color: #013C60;
+    background-color: #013C60;
+    margin: 0.5em;
+    border-radius: 5px;
+}
+
 .main {
     padding-top: 4em;
     display: block;
     text-align: center;
+    padding-bottom: 2em;
 }
 
 .city {
@@ -25,28 +48,80 @@ ion-content {
     padding-top: 0.2em;
 }
 
+.tempgrid {
+    display: block;
+    padding-bottom: 2em;
+}
+
+.current {
+    display: block;
+    font-weight: bold;
+    color: lightblue;
+    padding-bottom: 0.2em;
+    padding-left: 0.25em;
+}
 .date {
     display: block;
     font-size: $size5;
     font-weight: bold;
+    padding-left: 0.25em;
 }
 
 .description {
     display: block;
-    font-size: $size3;
+    font-size: $size5;
     font-weight: bold;
+    padding-left: 0.25em;
 }
 
 .temperature {
     display: block;
     font-size: $size1;
-    padding: 0px;
+    padding-top: 0.25em;
     margin: 0px;
+    color: white;
+}
+
+.detailed {
+    margin: auto;
+    padding: auto;
+    display: block;
+    font-size: $size6;
+    font-weight: bold;
 }
 
 .icon {
     display: block;
-    font-size: $size1;
-    padding-top: 0px;
     color: white;
+}
+
+.day {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    font-weight: bold;
+}
+
+.precipitation{
+    display: block;
+}
+
+.gridicon {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+.max, .min {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.forecastdivider {
+    display: block;
+    font-weight: bold;
+    color: lightblue;
+    padding-bottom: 0.2em;
+    padding-left: 0.5em;
+    padding-top: 1em;
 }

@@ -36,7 +36,7 @@ export class Tab3Page {
   // API call
   async getWeatherData(){
     // Current
-    this.weatherService.getWeatherData().subscribe((response) => {
+    this.weatherService.getWeatherData(53.350140, -6.266155).subscribe((response) => {
       this.resp = response;
       console.log(this.resp); // Logs json to the console
     });  
@@ -47,7 +47,7 @@ export class Tab3Page {
     setTimeout(() => {
       console.log("Refreshing..."); 
         // Current 
-        this.weatherService.getWeatherData().subscribe((response) => {
+        this.weatherService.getWeatherData(53.350140, -6.266155).subscribe((response) => {
           this.resp = response;
           console.log(this.resp); // Logs json to the console
           console.log("Done current.");
