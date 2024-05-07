@@ -120,16 +120,23 @@ export class Tab2Page {
   // IonRefresher. Refreshes the page with the new api call
   async handleRefresh(event: any) {
     setTimeout(() => {
-      console.log('Refreshing...');
-      // Current
-      this.weatherService
-        .getWeatherData(this.lat, this.lon)
-        .subscribe((response) => {
-          this.resp = response;
-          console.log(this.resp); // Logs json to the console
-          console.log('Done current.');
-          event.target.complete();
-        });
+      if (this.userInput == null) {
+        console.log('Refreshing...');
+        console.log('No User Input!');
+        console.log('Done');
+        event.target.complete();
+      } else {
+        console.log('Refreshing...');
+        // Current
+        this.weatherService
+          .getWeatherData(this.lat, this.lon)
+          .subscribe((response) => {
+            this.resp = response;
+            console.log(this.resp); // Logs json to the console
+            console.log('Done current.');
+            event.target.complete();
+          });
+      }
     }, 2000);
   }
 }

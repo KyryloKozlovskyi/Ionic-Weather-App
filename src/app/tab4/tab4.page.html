@@ -8,7 +8,7 @@
 
 <ion-content [fullscreen]="true">
   <div class="input">
-    <ion-input id ="input-alert" style="display: block;" label="Default location: " placeholder="Dublin" (keypress)="handleInput($event)"></ion-input>
+    <ion-input id ="input-alert" style="display: block;" label="Default location: " placeholder={{defaultSetting}} (keypress)="handleInput($event)"></ion-input>
   </div>
   <div class="toggle">
     <ion-toggle alignment="end">Dark/Light theme: </ion-toggle><br /><br />
