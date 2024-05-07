@@ -9,3 +9,16 @@ ion-content {
     --background: linear-gradient(150deg, rgba(48,107,190,1) 15%, rgba(1,60,96,1) 85%);
     --ion-text-color: #CFE5FD;
 }
+
+.input{
+    display: block;
+    margin: 0.5em;
+    font-size: $size5;
+    
+}
+
+.toggle{
+    display: block;
+    margin: 0.5em;
+    font-size: $size5;
+}

@@ -1,17 +1,16 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 4 Setup
+      Settings
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 4</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 4 page"></app-explore-container>
+  <div class="input">
+    <ion-input id ="input-alert" style="display: block;" label="Default location: " placeholder="Dublin" (keypress)="handleInput($event)"></ion-input>
+  </div>
+  <div class="toggle">
+    <ion-toggle alignment="end">Dark/Light theme: </ion-toggle><br /><br />
+  </div>
 </ion-content>

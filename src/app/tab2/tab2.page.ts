@@ -42,10 +42,10 @@ export class Tab2Page {
   }
 
   // Event handler for search box.
-  async handleInputChange(event: CustomEvent){
-    const value = (event.target as HTMLInputElement).value;
-    if(value != "")
+  async handleInput(event: KeyboardEvent){
+    if (event.key === 'Enter')
       {
+        const value = (event.target as HTMLInputElement).value;
         console.log('Input changed:', value);
         this.userInput = value;
         this.getGeocoding(this.userInput);
