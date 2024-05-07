@@ -13,6 +13,7 @@ import { DayPipe } from '../pipes/day.pipe';
 import { RainPipe } from '../pipes/rain.pipe';
 import { compassOutline, waterOutline, contractOutline, cloudOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+import { ReverseService } from '../services/reverse.service';
 
 @Component({
   selector: 'app-tab3',
@@ -24,7 +25,10 @@ import { addIcons } from 'ionicons';
 })
 export class Tab3Page {
   public resp: any = []; // Stores current json
-  constructor(private weatherService: WeatherServiceService) { 
+  public lat: any = 41.881832; 
+  public lon: any = -87.623177;
+  public geoRevResp: any = [];
+  constructor(private weatherService: WeatherServiceService, private reverseWeatherService: ReverseService) { 
     addIcons({compassOutline, waterOutline, contractOutline, cloudOutline});
   }
 
@@ -36,18 +40,28 @@ export class Tab3Page {
   // API call
   async getWeatherData(){
     // Current
-    this.weatherService.getWeatherData(53.350140, -6.266155).subscribe((response) => {
+    this.weatherService.getWeatherData(this.lat, this.lon).subscribe(async (response) => {
       this.resp = response;
       console.log(this.resp); // Logs json to the console
+      await this.getReverseGeocoding(this.lat, this.lon);
     });  
   }
+
+      // API Call. Coordinates into city names.
+      async getReverseGeocoding(lat: number, lon: number){
+        this.reverseWeatherService.getReverseGeocoding(lat, lon).subscribe(async (response) => {
+        this.geoRevResp = response;
+        console.log("Reverse")
+        console.log(this.geoRevResp); // Logs json to the console
+      });
+    }
 
   // IonRefresher. Refreshes the page with the new api call
   async handleRefresh(event: any){
     setTimeout(() => {
       console.log("Refreshing..."); 
         // Current 
-        this.weatherService.getWeatherData(53.350140, -6.266155).subscribe((response) => {
+        this.weatherService.getWeatherData(this.lat, this.lon).subscribe((response) => {
           this.resp = response;
           console.log(this.resp); // Logs json to the console
           console.log("Done current.");

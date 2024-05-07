@@ -15,7 +15,7 @@
   </ion-refresher>
   <!-- Body -->
   <div class="main">
-      <span class="city">Dublin</span>
+      <span class="city" *ngIf="geoRevResp[0]">{{ geoRevResp[0].name }}</span>
       <span class="date" *ngIf="resp.current">{{ resp.current.dt | date}}</span>
       <!-- API Icons -->
       <div class="icon" *ngIf="resp.current">

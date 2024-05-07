@@ -13,7 +13,7 @@
  </ion-refresher>
  <!-- Current Detailed Weahter Grid -->
  <div class="main">
-    <span class="city">Dublin</span>
+    <span class="city" *ngIf="geoRevResp[0]">{{ geoRevResp[0].name }}</span>
  </div>
  <ion-grid class="tempgrid">
     <ion-row>

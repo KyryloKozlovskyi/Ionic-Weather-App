@@ -14,6 +14,7 @@ import { DayPipe } from '../pipes/day.pipe';
 import { RainPipe } from '../pipes/rain.pipe';
 import { compassOutline, waterOutline, contractOutline, cloudOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+import { ReverseService } from '../services/reverse.service';
 
 @Component({
   selector: 'app-tab2',
@@ -26,12 +27,13 @@ import { addIcons } from 'ionicons';
 })
 export class Tab2Page {
   public geoResp: any = []; // Stores geocoding json
+  public geoRevResp: any = [];
   public resp: any = [] // Stores weather json
   public userInput: string = "Dublin" // User input
   public lat: any; 
   public lon: any;
 
-  constructor(private geocodingService: GeocodingService, private weatherService: WeatherServiceService) {
+  constructor(private geocodingService: GeocodingService, private weatherService: WeatherServiceService, private reverseWeatherService: ReverseService) {
     addIcons({compassOutline, waterOutline, contractOutline, cloudOutline});
   }
 
@@ -59,7 +61,17 @@ export class Tab2Page {
     console.log(this.geoResp); // Logs json to the console
     console.log(this.lat); // Logs lat
     console.log(this.lon); // Logs lon
+    await this.getReverseGeocoding(this.lat, this.lon);
     await this.getWeatherData(this.lat, this.lon);
+  });
+}
+
+  // API Call. Coordinates into city names.
+  async getReverseGeocoding(lat: number, lon: number){
+    this.reverseWeatherService.getReverseGeocoding(lat, lon).subscribe(async (response) => {
+    this.geoRevResp = response;
+    console.log("Reverse")
+    console.log(this.geoRevResp); // Logs json to the console
   });
 }
 
@@ -77,7 +89,7 @@ async handleRefresh(event: any){
   setTimeout(() => {
     console.log("Refreshing..."); 
       // Current 
-      this.weatherService.getWeatherData(53.350140, -6.266155).subscribe((response) => {
+      this.weatherService.getWeatherData(this.lat, this.lon).subscribe((response) => {
         this.resp = response;
         console.log(this.resp); // Logs json to the console
         console.log("Done current.");
