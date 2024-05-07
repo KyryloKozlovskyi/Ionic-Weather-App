@@ -1,27 +1,32 @@
 <!-- Header -->
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Current Weather
-    </ion-title>
+    <ion-title> Current Weather </ion-title>
   </ion-toolbar>
 </ion-header>
-<!-- Refresher -->
 <ion-content [fullscreen]="true">
-<!-- Refresher -->
-<ion-content [fullscreen]="true">
+  <!-- Refresher -->
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <!-- Body -->
   <div class="main">
-      <span class="city" *ngIf="geoRevResp[0]">{{ geoRevResp[0].name }}</span>
-      <span class="date" *ngIf="resp.current">{{ resp.current.dt | date}}</span>
-      <!-- API Icons -->
-      <div class="icon" *ngIf="resp.current">
-        <img src="http://openweathermap.org/img/wn/{{ resp.current.weather[0].icon }}@2x.png" alt="API Image">
-      </div>
-      <span class="description" *ngIf="resp.current">{{ resp.current.weather[0].main }}</span>
-      <span class="temperature" *ngIf="resp.current">{{ resp.current.temp | number: '1.0-0' }}°</span>
+    <span class="city" *ngIf="geoRevResp[0]">{{ geoRevResp[0].name }}</span>
+    <span class="date" *ngIf="resp.current">{{ resp.current.dt | date}}</span>
+    <!-- API Icons -->
+    <div class="icon" *ngIf="resp.current">
+      <img
+        src="http://openweathermap.org/img/wn/{{ resp.current.weather[0].icon }}@2x.png"
+        alt="API Image"
+      />
+    </div>
+    <!-- Description -->
+    <span class="description" *ngIf="resp.current"
+      >{{ resp.current.weather[0].main }}</span
+    >
+    <!-- Temperature -->
+    <span class="temperature" *ngIf="resp.current"
+      >{{ resp.current.temp | number: '1.0-0' }}°</span
+    >
   </div>
 </ion-content>

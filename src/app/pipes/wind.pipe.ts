@@ -2,10 +2,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'wind',
-  standalone: true
+  standalone: true,
 })
+// Wind pipe tranlates degrees into compass directions
 export class WindPipe implements PipeTransform {
-
   transform(degrees: number): string {
     if (degrees >= 0 && degrees < 45) {
       return 'N';
