@@ -13,6 +13,8 @@ import { NgIf } from '@angular/common';
 import { DatePipe } from '../pipes/date.pipe';
 import { IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
 import { ReverseService } from '../services/reverse.service';
+import { GeocodingService } from '../services/geocoding.service';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-tab1',
@@ -36,11 +38,14 @@ import { ReverseService } from '../services/reverse.service';
 export class Tab1Page {
   public resp: any = []; // Stores weather data obj
   public geoRevResp: any = []; // Stores city name
-  public lat: any = 41.881832; // Default lat
-  public lon: any = -87.623177; // Defaule lon
+  public geoResp: any = [];
+  public lat: any;
+  public lon: any;
   constructor(
     private weatherService: WeatherServiceService,
-    private reverseWeatherService: ReverseService
+    private reverseWeatherService: ReverseService,
+    private geocodingService: GeocodingService,
+    private storageService: StorageService
   ) {}
 
   // API call on page initialization
@@ -60,35 +65,37 @@ export class Tab1Page {
   }
 
   // API call to get weather data and city name
+
   async getWeatherData() {
-    this.weatherService
-      .getWeatherData(this.lat, this.lon)
-      .subscribe(async (response) => {
+    const defaultLocation = await this.storageService.get('defaultLocation');
+    if (!defaultLocation) {
+      // Handle the case when the default location is not available
+      return;
+    }
+  
+    this.geocodingService.getGeocoding(defaultLocation).subscribe(async (response) => {
+      this.geoResp = response;
+      this.lat = this.geoResp[0].lat; // Use class-level lat variable
+      this.lon = this.geoResp[0].lon; // Use class-level lon variable
+      console.log(this.geoResp);
+      console.log(this.lat);
+      console.log(this.lon);
+  
+      this.weatherService.getWeatherData(this.lat, this.lon).subscribe(async (response) => {
         this.resp = response;
-        console.log(this.resp); // Logs json to the console
-        await this.getReverseGeocoding(this.lat, this.lon); // API call to get a city name from coordinates
+        console.log(this.resp);
+        await this.getReverseGeocoding(this.lat, this.lon); // Use class-level lat and lon variables
       });
+    });
   }
 
   // IonRefresher to handle page refresh, sends a new API call
   async handleRefresh(event: any) {
-    setTimeout(() => {
+    setTimeout(async () => {
       console.log('Refreshing...');
-      this.weatherService
-        .getWeatherData(this.lat, this.lon) // // API call to get weather data and city name
-        .subscribe((response) => {
-          this.resp = response;
-          console.log(this.resp); // Logs json to the console
+          this.getWeatherData();
           console.log('Done.');
           event.target.complete();
-        });
-      this.reverseWeatherService // API call to get a city name from coordinates
-        .getReverseGeocoding(this.lat, this.lon)
-        .subscribe(async (response) => {
-          this.geoRevResp = response;
-          console.log('Reverse');
-          console.log(this.geoRevResp); // Logs obj to the console
-        });
     }, 2000);
   }
 }

@@ -11,6 +11,7 @@ import {
 } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import { GeocodingService } from '../services/geocoding.service';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-tab4',
@@ -30,12 +31,12 @@ import { GeocodingService } from '../services/geocoding.service';
   ],
 })
 export class Tab4Page {
-  public userInput: string = 'Dublin'; // User input
+  public userInput: any; // User input
   public geoResp: any = []; // Stores geocoding json
   public lat: any;
   public lon: any;
 
-  constructor(private geocodingService: GeocodingService) {}
+  constructor(private geocodingService: GeocodingService, private storageService: StorageService) {}
 
   async handleInput(event: KeyboardEvent) {
     if (event.key === 'Enter') {
@@ -43,6 +44,7 @@ export class Tab4Page {
       console.log('Input changed (settings):', value);
       this.userInput = value;
       await this.getGeocoding(this.userInput);
+      this.storageService.set("defaultLocation", this.userInput);
     }
   }
 

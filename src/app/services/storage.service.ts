@@ -20,6 +20,7 @@ export class StorageService {
       await this.init();
     }
     let result = await this._storage?.set(key, value);
+    console.log("Storage set()");
     console.log(result);
   }
 
@@ -28,6 +29,7 @@ export class StorageService {
       await this.init();
     }
     let value = await this._storage?.get(key);
+    console.log("Storage get()");
     console.log(value);
     return value;
   }

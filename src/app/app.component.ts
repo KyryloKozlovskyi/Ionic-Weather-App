@@ -12,6 +12,6 @@ export class AppComponent implements OnInit {
   constructor(private storageService: StorageService) {}
 
   async ngOnInit() {
-    await this.storageService.set('defaultLocation', 'Galway');
+    await this.storageService.set('defaultLocation', 'Dublin');
   }
 }
