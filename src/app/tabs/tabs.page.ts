@@ -1,7 +1,14 @@
-import { Component, EnvironmentInjector, inject } from '@angular/core';
-import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/angular/standalone';
+import { Component, EnvironmentInjector, inject, OnInit } from '@angular/core';
+import {
+  IonTabs,
+  IonTabBar,
+  IonTabButton,
+  IonIcon,
+  IonLabel,
+} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { cloud, layers, search, settings } from 'ionicons/icons';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-tabs',

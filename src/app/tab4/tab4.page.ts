@@ -34,7 +34,6 @@ export class Tab4Page {
   public geoResp: any = []; // Stores geocoding json
   public lat: any;
   public lon: any;
-alertButtons: any;
 
   constructor(private geocodingService: GeocodingService) {}
 

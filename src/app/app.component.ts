@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { StorageService } from './services/storage.service';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +8,10 @@ import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
   standalone: true,
   imports: [IonApp, IonRouterOutlet],
 })
-export class AppComponent implements OnInit{
-  constructor() {}
+export class AppComponent implements OnInit {
+  constructor(private storageService: StorageService) {}
 
-  ngOnInit(): void {
-
+  async ngOnInit() {
+    await this.storageService.set('defaultLocation', 'Galway');
   }
 }
