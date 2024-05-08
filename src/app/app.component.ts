@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
   coordinates: any = ''; // Coordinates
   lat: any; // Latitude
   lon: any; // Longitude
+  paletteToggle = false; // Dark palette toggle
   defaultSetting: any; // Default setting
   // Inject the services and controllers
   constructor(
@@ -27,21 +28,37 @@ export class AppComponent implements OnInit {
     await this.setTheme();
     await this.getGPS();
   }
-
   // Set theme on page load
   async setTheme() {
     const theme = await this.storageService.get('theme');
     if (theme === 'dark') {
-      document.body.classList.toggle('dark', theme === 'dark');
-      console.log('Theme set to', theme);
+      this.initializeDarkPalette(theme === 'dark'); // Initialize the dark palette based on the saved theme value
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+      // Listen for changes in the prefers-color-scheme media query
+      prefersDark.addEventListener('change', (mediaQuery) => {
+        this.initializeDarkPalette(mediaQuery.matches);
+      });
+      console.log('Theme set to dark');
     } else if (theme === 'light') {
       document.body.classList.toggle('light', theme === 'light');
+      document.body.classList.remove('dark');
       console.log('Theme set to', theme);
     } else {
       await this.storageService.set('theme', 'light');
       document.body.classList.remove('dark'); // Remove dark mode if theme is not set
       console.log('Theme set to light');
     }
+  }
+
+  // Initialize the dark palette based on the user's preference
+  initializeDarkPalette(isDark: any) {
+    this.paletteToggle = isDark;
+    this.toggleDarkPalette(isDark);
+  }
+
+  // Add or remove the "ion-palette-dark" class on the html element
+  toggleDarkPalette(shouldAdd: any) {
+    document.documentElement.classList.toggle('ion-palette-dark', shouldAdd);
   }
 
   // Get GPS coordinates
