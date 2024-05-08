@@ -59,12 +59,11 @@ export class Tab4Page implements OnInit {
   async ngOnInit() {
     const theme = await this.storageService.get('theme');
     this.initializeDarkPalette(theme === 'dark'); // Initialize the dark palette based on the saved theme value
-
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    // Listen for changes in the user's preference
     prefersDark.addEventListener('change', (mediaQuery) => {
       this.initializeDarkPalette(mediaQuery.matches);
     });
-
     this.defaultSetting = await this.storageService.get('defaultSetting'); // Get the default setting from storage
     console.log(this.defaultSetting);
     await this.getGPS(); // Get the GPS coordinates
