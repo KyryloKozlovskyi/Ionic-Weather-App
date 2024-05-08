@@ -57,14 +57,14 @@ export class Tab4Page implements OnInit {
 
   // Check/uncheck the toggle and update the palette based on isDark
   async ngOnInit() {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)'); // Check if the user prefers dark mode
-    this.initializeDarkPalette(prefersDark.matches); // Initialize the dark palette based on the user's preference
-    prefersDark.addEventListener(
-      'change',
-      (
-        mediaQuery // Listen for changes in the user's preference
-      ) => this.initializeDarkPalette(mediaQuery.matches)
-    );
+    const theme = await this.storageService.get('theme');
+    this.initializeDarkPalette(theme === 'dark'); // Initialize the dark palette based on the saved theme value
+
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    prefersDark.addEventListener('change', (mediaQuery) => {
+      this.initializeDarkPalette(mediaQuery.matches);
+    });
+
     this.defaultSetting = await this.storageService.get('defaultSetting'); // Get the default setting from storage
     console.log(this.defaultSetting);
     await this.getGPS(); // Get the GPS coordinates
@@ -76,9 +76,11 @@ export class Tab4Page implements OnInit {
     this.toggleDarkPalette(isDark);
   }
 
-  // Listen for the toggle check/uncheck to toggle the dark palette
+  // Listen for the toggle check/uncheck to toggle the dark palette and save the theme setting
   toggleChange(ev: any) {
+    const theme = ev.detail.checked ? 'dark' : 'light';
     this.toggleDarkPalette(ev.detail.checked);
+    this.storageService.set('theme', theme); // Save the theme setting to local storage
   }
 
   // Add or remove the "ion-palette-dark" class on the html element

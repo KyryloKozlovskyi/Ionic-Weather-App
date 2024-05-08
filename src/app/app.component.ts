@@ -24,7 +24,24 @@ export class AppComponent implements OnInit {
 
   // getGPS on page init
   async ngOnInit() {
+    await this.setTheme();
     await this.getGPS();
+  }
+
+  // Set theme on page load
+  async setTheme() {
+    const theme = await this.storageService.get('theme');
+    if (theme === 'dark') {
+      document.body.classList.toggle('dark', theme === 'dark');
+      console.log('Theme set to', theme);
+    } else if (theme === 'light') {
+      document.body.classList.toggle('light', theme === 'light');
+      console.log('Theme set to', theme);
+    } else {
+      await this.storageService.set('theme', 'light');
+      document.body.classList.remove('dark'); // Remove dark mode if theme is not set
+      console.log('Theme set to light');
+    }
   }
 
   // Get GPS coordinates
