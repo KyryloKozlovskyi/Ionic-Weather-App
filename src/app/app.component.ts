@@ -11,27 +11,29 @@ import { ReverseService } from './services/reverse.service';
   imports: [IonApp, IonRouterOutlet],
 })
 export class AppComponent implements OnInit {
-  geoRevResp: any = [];
-  coordinates: any = '';
-  lat: any;
-  lon: any;
-  defaultSetting: any;
-
+  geoRevResp: any = []; // Stores reverse geocoding json
+  coordinates: any = ''; // Coordinates
+  lat: any; // Latitude
+  lon: any; // Longitude
+  defaultSetting: any; // Default setting
+  // Inject the services and controllers
   constructor(
     private storageService: StorageService,
     private reverseWeatherService: ReverseService
   ) {}
 
+  // getGPS on page init
   async ngOnInit() {
     await this.getGPS();
   }
 
+  // Get GPS coordinates
   async getGPS() {
     try {
       this.coordinates = await Geolocation.getCurrentPosition();
       this.lon = this.coordinates.coords.longitude;
       this.lat = this.coordinates.coords.latitude;
-
+      // Get reverse geocoding
       this.reverseWeatherService
         .getReverseGeocoding(this.lat, this.lon)
         .subscribe(async (response) => {
@@ -39,21 +41,28 @@ export class AppComponent implements OnInit {
           const defaultSetting = await this.storageService.get(
             'defaultSetting'
           );
-
+          // Set default setting
           if (!defaultSetting) {
-            await this.storageService.set('defaultSetting', 'Default');
+            // If default setting is not set
+            await this.storageService.set('defaultSetting', 'Default'); // Set default setting to Default
             if (this.geoRevResp && this.geoRevResp.length > 0) {
+              // If reverse geocoding response is not empty
               const cityName = this.geoRevResp[0]?.name;
-              await this.storageService.set('defaultLocation', cityName);
-            } else{
+              await this.storageService.set('defaultLocation', cityName); // Set default location to city name
+            } else {
               //await this.storageService.set('defaultLocation', 'Default');
             }
-          }
-          else if(defaultSetting != "Default") {
-            await this.storageService.set('defaultLocation', await this.storageService.get("defaultSetting"));
+          } else if (defaultSetting != 'Default') {
+            // If default setting is not Default
+            await this.storageService.set(
+              // Set default location to user input
+              'defaultLocation',
+              await this.storageService.get('defaultSetting') // Get default setting from storage
+            );
           }
         });
     } catch (error) {
+      // Handle error
       console.error('Error getting GPS coordinates:', error);
     }
   }

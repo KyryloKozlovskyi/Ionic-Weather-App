@@ -23,9 +23,9 @@ bootstrapApplication(AppComponent, {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes),
-    importProvidersFrom(HttpClientModule, IonicStorageModule.forRoot({
-      name: "settingsdb",
-      driverOrder: [Drivers.IndexedDB]
+    importProvidersFrom(HttpClientModule, IonicStorageModule.forRoot({ // Import the providers from HttpClientModule and IonicStorageModule
+      name: "settingsdb", // Name of the database
+      driverOrder: [Drivers.IndexedDB] // Use IndexedDB
     }), )
   ],
 });

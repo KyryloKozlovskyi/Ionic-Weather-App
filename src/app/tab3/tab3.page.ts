@@ -58,13 +58,14 @@ export class Tab3Page {
   public lon: any;
   public geoRevResp: any = [];
   public geoResp: any = [];
+  // Injects the service into the constructor
   constructor(
     private weatherService: WeatherServiceService,
     private reverseWeatherService: ReverseService,
     private storageService: StorageService,
     private geocodingService: GeocodingService
   ) {
-    addIcons({ compassOutline, waterOutline, contractOutline, cloudOutline });
+    addIcons({ compassOutline, waterOutline, contractOutline, cloudOutline }); // Adds icons to the page
   }
 
   // Calls an api on page initialization
@@ -72,27 +73,32 @@ export class Tab3Page {
     await this.getWeatherData();
   }
 
+  // API Call. City names into coordinates.
   async getWeatherData() {
     const defaultLocation = await this.storageService.get('defaultLocation');
     if (!defaultLocation) {
       // Handle the case when the default location is not available
       return;
     }
-  
-    this.geocodingService.getGeocoding(defaultLocation).subscribe(async (response) => {
-      this.geoResp = response;
-      this.lat = this.geoResp[0].lat; // Use class-level lat variable
-      this.lon = this.geoResp[0].lon; // Use class-level lon variable
-      console.log(this.geoResp);
-      console.log(this.lat);
-      console.log(this.lon);
-  
-      this.weatherService.getWeatherData(this.lat, this.lon).subscribe(async (response) => {
-        this.resp = response;
-        console.log(this.resp);
-        await this.getReverseGeocoding(this.lat, this.lon); // Use class-level lat and lon variables
+    // Use the default location to get the weather data
+    this.geocodingService
+      .getGeocoding(defaultLocation)
+      .subscribe(async (response) => {
+        this.geoResp = response;
+        this.lat = this.geoResp[0].lat; // Use class-level lat variable
+        this.lon = this.geoResp[0].lon; // Use class-level lon variable
+        console.log(this.geoResp);
+        console.log(this.lat);
+        console.log(this.lon);
+        // Use the coordinates to get the weather data
+        this.weatherService
+          .getWeatherData(this.lat, this.lon)
+          .subscribe(async (response) => {
+            this.resp = response;
+            console.log(this.resp);
+            await this.getReverseGeocoding(this.lat, this.lon); // Use class-level lat and lon variables
+          });
       });
-    });
   }
 
   // API Call. Coordinates into city names.
@@ -105,13 +111,14 @@ export class Tab3Page {
         console.log(this.geoRevResp); // Logs json to the console
       });
   }
-// IonRefresher to handle page refresh, sends a new API call
-async handleRefresh(event: any) {
-  setTimeout(async () => {
-    console.log('Refreshing...');
-        this.getWeatherData();
-        console.log('Done Current.');
-        event.target.complete();
-  }, 2000);
-}
+
+  // IonRefresher to handle page refresh, sends a new API call
+  async handleRefresh(event: any) {
+    setTimeout(async () => {
+      console.log('Refreshing...');
+      this.getWeatherData();
+      console.log('Done Current.');
+      event.target.complete();
+    }, 2000);
+  }
 }

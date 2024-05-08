@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 export class GeocodingService {
   constructor(public http: HttpClient) {}
 
+  // Get geocoding data of the city
   getGeocoding(city: string): Observable<any> {
     let apiKey = 'd0ac9e1f6578b3711de227dcde68e505'; // API key
     let apiCall = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`; // API call

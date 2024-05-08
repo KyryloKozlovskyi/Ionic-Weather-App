@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 export class WeatherServiceService {
   constructor(public http: HttpClient) {}
 
+  // Get weather data from the coordinates
   getWeatherData(lat: number, lon: number): Observable<any> {
     let apiKey = 'd0ac9e1f6578b3711de227dcde68e505'; // API key
     let apiCall = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`; // API caall

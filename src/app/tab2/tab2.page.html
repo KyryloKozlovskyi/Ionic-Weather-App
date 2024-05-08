@@ -1,21 +1,24 @@
+<!-- Header -->
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title> Search </ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content [fullscreen]="true">
+  <!-- Search Bar -->
   <ion-searchbar
     show-clear-button="always"
     animated="true"
     placeholder="Enter the City"
     (keypress)="handleInput($event)"
   ></ion-searchbar>
+  <!-- Refresh -->
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <!-- Current Detailed Weahter Grid -->
   <div *ngIf="showContent">
+    <!-- City Row -->
     <div class="main">
       <span class="city" *ngIf="geoRevResp[0]">{{ geoRevResp[0].name }}</span>
     </div>
@@ -25,11 +28,13 @@
           >{{ resp.current.dt | date}}</span
         >
       </ion-row>
+      <!-- Temperature Row -->
       <ion-row>
         <span class="temperature" *ngIf="resp.current"
           >{{ resp.current.temp | number: '1.0-0' }}°/{{ resp.daily[0].temp.min
           | number: '1.0-0' }}°</span
         >
+        <!-- Icon -->
         <div class="icon" *ngIf="resp.current">
           <img
             src="http://openweathermap.org/img/wn/{{ resp.current.weather[0].icon }}@2x.png"
@@ -37,13 +42,16 @@
           />
         </div>
       </ion-row>
+      <!-- Description Row -->
       <ion-row>
         <span class="description" *ngIf="resp.current"
           >{{ resp.current.weather[0].main }}</span
         >
       </ion-row>
     </ion-grid>
+    <!-- Weather Conditions Grid -->
     <ion-grid>
+      <!-- Wind -->
       <span class="current">Current conditions</span>
       <ion-row>
         <ion-col class="conditions">
@@ -55,6 +63,7 @@
             >{{ resp.current.wind_speed }} km/h</span
           >
         </ion-col>
+        <!-- Rainfall -->
         <ion-col class="conditions">
           <span class="detailed">
             Rainfall
@@ -64,6 +73,7 @@
             >{{ resp.current.rain | rain}} mm</span
           >
         </ion-col>
+        <!-- Pressure -->
         <ion-col class="conditions">
           <span class="detailed">
             Pressure
@@ -75,6 +85,7 @@
         </ion-col>
       </ion-row>
       <ion-row>
+        <!-- Wind Direction -->
         <ion-col class="conditions">
           <span class="detailed">
             Direction
@@ -84,6 +95,7 @@
             >{{ resp.current.wind_deg | wind }}</span
           >
         </ion-col>
+        <!-- Humidity -->
         <ion-col class="conditions">
           <span class="detailed">
             Humidity
@@ -93,6 +105,7 @@
             >{{ resp.current.humidity }} %</span
           >
         </ion-col>
+        <!-- Cloudiness -->
         <ion-col class="conditions">
           <span class="detailed">
             Cloudiness
@@ -130,7 +143,7 @@
           >{{resp.daily[6].dt | day}}</ion-col
         >
       </ion-row>
-      <!-- Icon -->
+      <!-- Icons -->
       <ion-row>
         <ion-col class="gridicon" *ngIf="resp.daily"
           ><img

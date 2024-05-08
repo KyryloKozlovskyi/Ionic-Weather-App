@@ -61,17 +61,17 @@ export class Tab2Page {
   public geoRevResp: any = [];
   public resp: any = []; // Stores weather json
   public userInput: any; // User input
-  public lat: any;
-  public lon: any;
-  public showContent: boolean = false;
-
+  public lat: any; // Latitude
+  public lon: any; // Longitude
+  public showContent: boolean = false; // Show content flag
+  // Injecting the services
   constructor(
     private geocodingService: GeocodingService,
     private weatherService: WeatherServiceService,
     private reverseWeatherService: ReverseService,
     private alertController: AlertController
   ) {
-    addIcons({ compassOutline, waterOutline, contractOutline, cloudOutline });
+    addIcons({ compassOutline, waterOutline, contractOutline, cloudOutline }); // Add icons
   }
 
   // Event handler for search box.
@@ -79,9 +79,9 @@ export class Tab2Page {
     if (event.key === 'Enter') {
       const value = (event.target as HTMLInputElement).value;
       console.log('Input changed:', value);
-      this.userInput = value;
-      await this.getGeocoding(this.userInput);
-      this.showContent = true;
+      this.userInput = value; // Set user input
+      await this.getGeocoding(this.userInput); // API call
+      this.showContent = true; // Show content
     }
   }
 
@@ -101,25 +101,25 @@ export class Tab2Page {
         } else {
           // Handle the case when response is undefined or empty
           console.error('Error in geocoding service: Check your input.');
-          this.showContent = false;
+          this.showContent = false; // Hide content
           const alert = await this.alertController.create({
             header: 'Error',
             message: 'Check your input.',
             buttons: ['OK'],
           });
-          await alert.present();
+          await alert.present(); // Show alert
         }
       },
       async (error) => {
         // Handle the error here
         console.error('Error in geocoding service:', error);
-        this.showContent = false;
+        this.showContent = false; // Hide content
         const alert = await this.alertController.create({
           header: 'Error',
           message: 'An error occurred..',
           buttons: ['OK'],
         });
-        await alert.present();
+        await alert.present(); // Show alert
       }
     );
   }

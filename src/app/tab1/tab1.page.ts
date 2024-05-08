@@ -38,9 +38,10 @@ import { StorageService } from '../services/storage.service';
 export class Tab1Page {
   public resp: any = []; // Stores weather data obj
   public geoRevResp: any = []; // Stores city name
-  public geoResp: any = [];
-  public lat: any;
-  public lon: any;
+  public geoResp: any = []; // Stores coordinates
+  public lat: any; // Stores latitude
+  public lon: any; // Stores longitude
+  // Injecting the services
   constructor(
     private weatherService: WeatherServiceService,
     private reverseWeatherService: ReverseService,
@@ -65,37 +66,38 @@ export class Tab1Page {
   }
 
   // API call to get weather data and city name
-
   async getWeatherData() {
     const defaultLocation = await this.storageService.get('defaultLocation');
     if (!defaultLocation) {
       // Handle the case when the default location is not available
       return;
     }
-  
-    this.geocodingService.getGeocoding(defaultLocation).subscribe(async (response) => {
-      this.geoResp = response;
-      this.lat = this.geoResp[0].lat; // Use class-level lat variable
-      this.lon = this.geoResp[0].lon; // Use class-level lon variable
-      console.log(this.geoResp);
-      console.log(this.lat);
-      console.log(this.lon);
-  
-      this.weatherService.getWeatherData(this.lat, this.lon).subscribe(async (response) => {
-        this.resp = response;
-        console.log(this.resp);
-        await this.getReverseGeocoding(this.lat, this.lon); // Use class-level lat and lon variables
+    this.geocodingService // Get coordinates from the city name
+      .getGeocoding(defaultLocation)
+      .subscribe(async (response) => {
+        this.geoResp = response;
+        this.lat = this.geoResp[0].lat; // Use class-level lat variable
+        this.lon = this.geoResp[0].lon; // Use class-level lon variable
+        console.log(this.geoResp);
+        console.log(this.lat);
+        console.log(this.lon);
+        this.weatherService // Get weather data from the coordinates
+          .getWeatherData(this.lat, this.lon)
+          .subscribe(async (response) => {
+            this.resp = response;
+            console.log(this.resp);
+            await this.getReverseGeocoding(this.lat, this.lon); // Use class-level lat and lon variables
+          });
       });
-    });
   }
 
   // IonRefresher to handle page refresh, sends a new API call
   async handleRefresh(event: any) {
     setTimeout(async () => {
       console.log('Refreshing...');
-          this.getWeatherData();
-          console.log('Done.');
-          event.target.complete();
+      this.getWeatherData();
+      console.log('Done.');
+      event.target.complete();
     }, 2000);
   }
 }
