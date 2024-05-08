@@ -27,6 +27,7 @@ import {
 } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { ReverseService } from '../services/reverse.service';
+import { AlertController } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-tab2',
@@ -67,7 +68,8 @@ export class Tab2Page {
   constructor(
     private geocodingService: GeocodingService,
     private weatherService: WeatherServiceService,
-    private reverseWeatherService: ReverseService
+    private reverseWeatherService: ReverseService,
+    private alertController: AlertController
   ) {
     addIcons({ compassOutline, waterOutline, contractOutline, cloudOutline });
   }
@@ -85,16 +87,41 @@ export class Tab2Page {
 
   // API Call. Translates city name into coordinates. Calls the api to get weather data for the specified city
   getGeocoding(input: any) {
-    this.geocodingService.getGeocoding(input).subscribe(async (response) => {
-      this.geoResp = response;
-      this.lat = this.geoResp[0].lat;
-      this.lon = this.geoResp[0].lon;
-      console.log(this.geoResp); // Logs json to the console
-      console.log(this.lat); // Logs lat
-      console.log(this.lon); // Logs lon
-      await this.getReverseGeocoding(this.lat, this.lon);
-      await this.getWeatherData(this.lat, this.lon);
-    });
+    this.geocodingService.getGeocoding(input).subscribe(
+      async (response) => {
+        if (response && response.length > 0) {
+          this.geoResp = response;
+          this.lat = this.geoResp[0].lat;
+          this.lon = this.geoResp[0].lon;
+          console.log(this.geoResp); // Logs json to the console
+          console.log(this.lat); // Logs lat
+          console.log(this.lon); // Logs lon
+          await this.getReverseGeocoding(this.lat, this.lon);
+          await this.getWeatherData(this.lat, this.lon);
+        } else {
+          // Handle the case when response is undefined or empty
+          console.error('Error in geocoding service: Check your input.');
+          this.showContent = false;
+          const alert = await this.alertController.create({
+            header: 'Error',
+            message: 'Check your input.',
+            buttons: ['OK'],
+          });
+          await alert.present();
+        }
+      },
+      async (error) => {
+        // Handle the error here
+        console.error('Error in geocoding service:', error);
+        this.showContent = false;
+        const alert = await this.alertController.create({
+          header: 'Error',
+          message: 'An error occurred..',
+          buttons: ['OK'],
+        });
+        await alert.present();
+      }
+    );
   }
 
   // API Call. Coordinates into city names.
