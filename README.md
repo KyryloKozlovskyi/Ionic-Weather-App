@@ -1,6 +1,6 @@
 # Ionic Weather App
 
-Welcome to the Ionic Weather App! This application provides weather information based on your current/preferred location using Ionic framework.
+Welcome to the Ionic Weather App! This application provides weather information based on your current/preferred location or city name using Ionic framework.
 
 ## Prerequisites
 
@@ -31,4 +31,4 @@ ionic serve
 ```
 
 ## Usage
-Upon launching the app in your web browser, you will be **prompted** to **allow access to your location**. Once permission is granted, the app will display weather information based on your current location.
+Upon launching the app in your web browser, you will be **prompted** to **allow access to your location**. Once permission is granted, the app will display weather information based on your current location by default.
