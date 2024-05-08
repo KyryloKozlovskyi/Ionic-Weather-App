@@ -52,6 +52,12 @@ export class Tab1Page {
   // API call on page initialization
   async ngOnInit() {
     await this.getWeatherData(); // API call to get weather data and city name
+    // Refreshes the page to properdly display data
+    setTimeout(async () => {
+      console.log('Refreshing Initial...');
+      await this.getWeatherData();
+      console.log('Done.');
+    }, 2000);
   }
 
   // API call to get a city name from coordinates
