@@ -13,7 +13,7 @@ Before running the project, ensure you have the following installed on your loca
 
 1. Clone the repository to your local machine:
 ```
-git clone https://github.com/your-username/Ionic-Weather-App.git
+git clone https://github.com/KyryloKozlovskyi/Ionic-Weather-App
 ```
 2. Navigate to the project directory:
 ```
