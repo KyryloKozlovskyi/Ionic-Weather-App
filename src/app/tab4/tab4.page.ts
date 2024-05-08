@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
@@ -16,6 +16,8 @@ import { AsyncPipe } from '@angular/common';
 import { Geolocation } from '@capacitor/geolocation';
 import { ReverseService } from '../services/reverse.service';
 import { AlertController } from '@ionic/angular/standalone';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-tab4',
@@ -33,9 +35,13 @@ import { AlertController } from '@ionic/angular/standalone';
     IonContent,
     ExploreContainerComponent,
     AsyncPipe,
+    FormsModule,
   ],
 })
+
 export class Tab4Page implements OnInit {
+  paletteToggle = false;
+
   public userInput: any; // User input
   public geoResp: any = []; // Stores geocoding json
   public lat: any;
@@ -52,11 +58,32 @@ export class Tab4Page implements OnInit {
     private alertController: AlertController
   ) {}
 
+  // Check/uncheck the toggle and update the palette based on isDark
+
   async ngOnInit() {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    this.initializeDarkPalette(prefersDark.matches);
+    prefersDark.addEventListener('change', (mediaQuery) => this.initializeDarkPalette(mediaQuery.matches));
+
     this.defaultSetting = await this.storageService.get('defaultSetting');
     console.log(this.defaultSetting);
 
     await this.getGPS();
+  }
+
+  initializeDarkPalette(isDark: any) {
+    this.paletteToggle = isDark;
+    this.toggleDarkPalette(isDark);
+  }
+
+  // Listen for the toggle check/uncheck to toggle the dark palette
+  toggleChange(ev: any) {
+    this.toggleDarkPalette(ev.detail.checked);
+  }
+
+  // Add or remove the "ion-palette-dark" class on the html element
+  toggleDarkPalette(shouldAdd: any) {
+    document.documentElement.classList.toggle('ion-palette-dark', shouldAdd);
   }
 
   async handleInput(event: KeyboardEvent) {
