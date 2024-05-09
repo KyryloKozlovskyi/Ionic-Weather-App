@@ -30,8 +30,5 @@ Once the installation is complete, you can run the Ionic Weather App using the f
 ionic serve
 ```
 
-## Usage
-Upon launching the app in your web browser, you will be **prompted** to **allow access to your location**. Once permission is granted, the app will display weather information based on your current location by default.
-
 ***
 _For more information about the app, please go to the [Wiki](https://github.com/KyryloKozlovskyi/Ionic-Weather-App/wiki) page._
